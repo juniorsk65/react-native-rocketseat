@@ -65,9 +65,9 @@ export default class App extends React.Component {
           <ScrollView contentContainerStyle={styles.repoList}>
             {this.state.repos.map(repo => <Repo key={repo.id} data={repo} />) }
           </ScrollView>
-           {(this.state.modalVisible == true) ? (<NewRepoModal onCancel={() => this.setState({modalVisible: true})} 
+           <NewRepoModal onCancel={() => this.setState({modalVisible: false})} 
                                 onAdd={this._addRepository}
-                                visible={this.state.modalVisible}/>) : (null)}
+                                visible={this.state.modalVisible}/>
       </View>
     );  
   }
