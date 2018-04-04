@@ -1,0 +1,303 @@
+__d(function (global, require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _react2 = require(_dependencyMap[0], "react");
+
+  var _react3 = _interopRequireDefault(_react2);
+
+  var _index = require(_dependencyMap[1], "./node_modules/react-transform-hmr/lib/index.js");
+
+  var _index2 = _interopRequireDefault(_index);
+
+  var _jsxFileName = "/home/lucianojr/Documentos/UFPB/Projetos/rocketseat-react-github/App.js";
+
+  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  var _reactNative = require(_dependencyMap[2], "react-native");
+
+  var _Repo = require(_dependencyMap[3], "./componentes/Repo");
+
+  var _Repo2 = _interopRequireDefault(_Repo);
+
+  var _NewRepoModal = require(_dependencyMap[4], "./componentes/NewRepoModal");
+
+  var _NewRepoModal2 = _interopRequireDefault(_NewRepoModal);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+  var _components = {
+    App: {
+      displayName: "App"
+    }
+  };
+
+  var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+    filename: "/home/lucianojr/Documentos/UFPB/Projetos/rocketseat-react-github/App.js",
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+  });
+
+  function _wrapComponent(id) {
+    return function (Component) {
+      return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+    };
+  }
+
+  var App = _wrapComponent("App")(function (_React$Component) {
+    _inherits(App, _React$Component);
+
+    function App() {
+      var _ref,
+          _this2 = this;
+
+      var _temp, _this, _ret;
+
+      _classCallCheck(this, App);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+        modalVisible: false,
+        repos: []
+      }, _this._addRepository = function _callee(newRepoText) {
+        var repoCall, response, repository;
+        return regeneratorRuntime.async(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return regeneratorRuntime.awrap(fetch("https://api.github.com/repos/" + newRepoText));
+
+              case 2:
+                repoCall = _context.sent;
+                _context.next = 5;
+                return regeneratorRuntime.awrap(repoCall.json());
+
+              case 5:
+                response = _context.sent;
+                repository = {
+                  id: response.id,
+                  thumbnail: response.owner.avatar_url,
+                  tittle: response.name,
+                  author: response.owner.login
+                };
+
+                _this.setState({
+                  modalVisible: false,
+                  repos: [].concat(_toConsumableArray(_this.state.repos), [repository])
+                });
+
+                _context.next = 10;
+                return regeneratorRuntime.awrap(_reactNative.AsyncStorage.setItem('@GitRepo:repositories', JSON.stringify(_this.state.repos)));
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, null, _this2);
+      }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(App, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        var repos;
+        return regeneratorRuntime.async(function componentDidMount$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.t1 = JSON;
+                _context2.next = 3;
+                return regeneratorRuntime.awrap(_reactNative.AsyncStorage.getItem('@GitRepo:repositories'));
+
+              case 3:
+                _context2.t2 = _context2.sent;
+                _context2.t0 = _context2.t1.parse.call(_context2.t1, _context2.t2);
+
+                if (_context2.t0) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                _context2.t0 = [];
+
+              case 7:
+                repos = _context2.t0;
+                this.setState({
+                  repos: repos
+                });
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, null, this);
+      }
+    }, {
+      key: "ModalCondicional",
+      value: function ModalCondicional(props) {
+        var _this3 = this;
+
+        return props.modalVisible == true ? _react3.default.createElement(_NewRepoModal2.default, {
+          onCancel: function onCancel() {
+            return _this3.setState({
+              modalVisible: true
+            });
+          },
+          onAdd: this._addRepository,
+          visible: this.state.modalVisible,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 34
+          }
+        }) : null;
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        var _this4 = this;
+
+        return _react3.default.createElement(
+          _reactNative.View,
+          {
+            style: styles.container,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 68
+            }
+          },
+          _react3.default.createElement(
+            _reactNative.View,
+            {
+              style: styles.header,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 69
+              }
+            },
+            _react3.default.createElement(
+              _reactNative.Text,
+              {
+                style: styles.headerText,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 70
+                }
+              },
+              " "
+            ),
+            _react3.default.createElement(
+              _reactNative.Text,
+              {
+                style: styles.headerText,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 71
+                }
+              },
+              "SisEnex!"
+            ),
+            _react3.default.createElement(
+              _reactNative.TouchableOpacity,
+              {
+                onPress: function onPress() {
+                  return _this4.setState({
+                    modalVisible: true
+                  });
+                },
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 72
+                }
+              },
+              _react3.default.createElement(
+                _reactNative.Text,
+                {
+                  style: styles.headerButton,
+                  __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 73
+                  }
+                },
+                "+"
+              )
+            )
+          ),
+          _react3.default.createElement(
+            _reactNative.ScrollView,
+            {
+              contentContainerStyle: styles.repoList,
+              __source: {
+                fileName: _jsxFileName,
+                lineNumber: 76
+              }
+            },
+            this.state.repos.map(function (repo) {
+              return _react3.default.createElement(_Repo2.default, {
+                key: repo.id,
+                data: repo,
+                __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 77
+                }
+              });
+            })
+          ),
+          _react3.default.createElement(ModalCondicional, {
+            modalVisible: this.state.modalVisible,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 79
+            }
+          })
+        );
+      }
+    }]);
+
+    return App;
+  }(_react3.default.Component));
+
+  exports.default = App;
+
+  var styles = _reactNative.StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#303030'
+    },
+    header: {
+      height: _reactNative.Platform.OS === 'ios' ? 100 : 80,
+      paddingTop: _reactNative.Platform.OS === 'ios' ? 0 : 20,
+      backgroundColor: '#FFF',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: 20
+    },
+    headerButton: {
+      fontSize: 30,
+      fontWeight: 'bold'
+    },
+    headerText: {
+      fontSize: 20,
+      fontWeight: 'bold'
+    },
+    repoList: {
+      padding: 20
+    }
+  });
+});
